@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDS_UNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H
-#define __CDS_UNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H
+#ifndef CDSUNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H
+#define CDSUNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H
 
 #include <cds/urcu/general_instant.h>
 #include <cds/container/details/ellen_bintree_base.h>
@@ -108,4 +99,4 @@ namespace ellen_bintree_pool {
 
 } // namespace ellen_bintree_pool
 
-#endif // #ifndef __CDS_UNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H
+#endif // #ifndef CDSUNIT_ELLEN_BINTREE_UPDATE_DESC_POOL_H

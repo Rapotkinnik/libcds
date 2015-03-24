@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "map2/map_types.h"
 #include "cppunit/thread.h"
@@ -151,7 +142,7 @@ namespace map2 {
             CppUnitMini::ThreadPool pool( *this );
             pool.add( new work_thread( pool, testMap ), c_nThreadCount );
             pool.run( c_nDuration );
-            CPPUNIT_MSG( "   Duration=" << pool.avgDuration() );
+            //CPPUNIT_MSG( "   Duration=" << pool.avgDuration() );
 
             size_t nInsertSuccess = 0;
             size_t nInsertFailed = 0;
@@ -161,7 +152,7 @@ namespace map2 {
             size_t nFindFailed = 0;
             for ( CppUnitMini::ThreadPool::iterator it = pool.begin(); it != pool.end(); ++it ) {
                 work_thread * pThread = static_cast<work_thread *>( *it );
-                assert( pThread != NULL );
+                assert( pThread != nullptr );
                 nInsertSuccess += pThread->m_nInsertSuccess;
                 nInsertFailed += pThread->m_nInsertFailed;
                 nDeleteSuccess += pThread->m_nDeleteSuccess;
@@ -170,15 +161,21 @@ namespace map2 {
                 nFindFailed += pThread->m_nFindFailed;
             }
 
+            size_t nTotalOps = nInsertSuccess + nInsertFailed + nDeleteSuccess + nDeleteFailed + nFindSuccess + nFindFailed;
+
             CPPUNIT_MSG( "  Totals (success/failed): \n\t"
                       << "      Insert=" << nInsertSuccess << '/' << nInsertFailed << "\n\t"
                       << "      Delete=" << nDeleteSuccess << '/' << nDeleteFailed << "\n\t"
                       << "        Find=" << nFindSuccess   << '/' << nFindFailed   << "\n\t"
                       << "       Speed=" << (nFindSuccess + nFindFailed) / c_nDuration << " find/sec\n\t"
                       << "             " << (nInsertSuccess + nDeleteSuccess) / c_nDuration << " modify/sec\n\t"
+                      << "   Total ops=" << nTotalOps << "\n\t"
+                      << "       speed=" << nTotalOps / c_nDuration << " ops/sec\n\t"
                       << "      Map size=" << testMap.size()
                 );
 
+
+            check_before_cleanup( testMap );
 
             CPPUNIT_MSG( "  Clear map (single-threaded)..." );
             timer.reset();
@@ -258,6 +255,7 @@ namespace map2 {
         CDSUNIT_DECLARE_SplitList
         CDSUNIT_DECLARE_SkipListMap
         CDSUNIT_DECLARE_EllenBinTreeMap
+        CDSUNIT_DECLARE_BronsonAVLTreeMap
         CDSUNIT_DECLARE_StripedMap
         CDSUNIT_DECLARE_RefinableMap
         CDSUNIT_DECLARE_CuckooMap
@@ -268,6 +266,7 @@ namespace map2 {
             CDSUNIT_TEST_SplitList
             CDSUNIT_TEST_SkipListMap
             CDSUNIT_TEST_EllenBinTreeMap
+            CDSUNIT_TEST_BronsonAVLTreeMap
             CDSUNIT_TEST_StripedMap
             CDSUNIT_TEST_RefinableMap
             CDSUNIT_TEST_CuckooMap

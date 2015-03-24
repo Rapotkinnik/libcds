@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef _CDSUNIT_SET2_SET_DEFS_H
-#define _CDSUNIT_SET2_SET_DEFS_H
+#ifndef CDSUNIT_SET_DEFS_H
+#define CDSUNIT_SET_DEFS_H
 
 #define CDSUNIT_DECLARE_StdSet \
     TEST_SET(StdSet_Spin) \
@@ -557,4 +548,4 @@
     CDSUNIT_TEST_RefinableSet_boost_container \
     CDSUNIT_TEST_RefinableSet_boost_flat_container
 
-#endif // #ifndef _CDSUNIT_SET2_SET_DEFS_H
+#endif // #ifndef CDSUNIT_SET_DEFS_H

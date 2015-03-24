@@ -1,20 +1,9 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "map/hdr_striped_map.h"
 #include <cds/container/striped_map/std_hash_map.h>
 #include <cds/container/striped_map.h>
-#include <cds/lock/spinlock.h>
-
-#if !((CDS_COMPILER == CDS_COMPILER_MSVC || (CDS_COMPILER == CDS_COMPILER_INTEL && CDS_OS_INTERFACE == CDS_OSI_WINDOWS)) && _MSC_VER < 1600)
+#include <cds/sync/spinlock.h>
 
 namespace map {
 
@@ -61,7 +50,7 @@ namespace map {
         typedef cc::StripedMap< map_t
             , co::hash< hash_int >
             , co::less< less >
-            ,co::mutex_policy< cc::striped_set::striping<cds::lock::Spin> >
+            , co::mutex_policy< cc::striped_set::striping<cds::sync::spin> >
         >   map_spin;
         test_striped< map_spin >();
 
@@ -143,5 +132,3 @@ namespace map {
     }
 
 }   // namespace map
-
-#endif // #if !(CDS_COMPILER == CDS_COMPILER_MSVC && CDS_COMPILER_VERSION < 1600)

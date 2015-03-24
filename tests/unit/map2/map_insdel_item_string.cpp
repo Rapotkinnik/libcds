@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "map2/map_types.h"
 #include "cppunit/thread.h"
@@ -103,6 +94,11 @@ namespace map2 {
                 void operator ()(std::pair< typename std::remove_const< typename Map::key_type >::type, typename Map::mapped_type>& val )
                 {
                     val.second = 0;
+                }
+                // for BronsonAVLTreeMap
+                void operator()( typename Map::key_type const& /*key*/, typename Map::mapped_type& val )
+                {
+                    val = 0;
                 }
             };
 
@@ -206,6 +202,8 @@ namespace map2 {
             }
             CPPUNIT_MSG( "    Duration=" << timer.duration() );
 
+            check_before_cleanup( testMap );
+
             testMap.clear();
             additional_check( testMap );
             print_stat( testMap );
@@ -269,6 +267,7 @@ namespace map2 {
         CDSUNIT_DECLARE_SplitList
         CDSUNIT_DECLARE_SkipListMap
         CDSUNIT_DECLARE_EllenBinTreeMap
+        CDSUNIT_DECLARE_BronsonAVLTreeMap
         CDSUNIT_DECLARE_StripedMap
         CDSUNIT_DECLARE_RefinableMap
         CDSUNIT_DECLARE_CuckooMap
@@ -279,6 +278,7 @@ namespace map2 {
             CDSUNIT_TEST_SplitList
             CDSUNIT_TEST_SkipListMap
             CDSUNIT_TEST_EllenBinTreeMap
+            CDSUNIT_TEST_BronsonAVLTreeMap
             CDSUNIT_TEST_StripedMap
             CDSUNIT_TEST_RefinableMap
             CDSUNIT_TEST_CuckooMap

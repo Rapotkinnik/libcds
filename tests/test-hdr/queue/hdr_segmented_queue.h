@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDSHDR_QUEUE_SEGMENTED_QUEUE_H
-#define __CDSHDR_QUEUE_SEGMENTED_QUEUE_H
+#ifndef CDSTEST_HDR_QUEUE_SEGMENTED_QUEUE_H
+#define CDSTEST_HDR_QUEUE_SEGMENTED_QUEUE_H
 
 #include "cppunit/cppunit_proxy.h"
 #include <cds/intrusive/details/base.h>
@@ -235,9 +226,9 @@ namespace queue {
             CPPUNIT_TEST( SegmQueue_DHP_mutex_cacheline_padding )
             CPPUNIT_TEST( SegmQueue_DHP_shuffle_cacheline_padding )
             CPPUNIT_TEST( SegmQueue_DHP_stat_cacheline_padding )
-            CPPUNIT_TEST_SUITE_END()
+        CPPUNIT_TEST_SUITE_END()
 
     };
 } // namespace queue
 
-#endif //#ifndef __CDSHDR_QUEUE_SEGMENTED_QUEUE_H
+#endif //#ifndef CDSTEST_HDR_QUEUE_SEGMENTED_QUEUE_H

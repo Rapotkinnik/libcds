@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 /*
  * Copyright (c) 2003, 2004
@@ -26,8 +17,8 @@
 
 /* $Id$ */
 
-#ifndef _CPPUNITMINIFILEREPORTERINTERFACE_H_
-#define _CPPUNITMINIFILEREPORTERINTERFACE_H_
+#ifndef CDS_CPPUNIT_MINIFILEREPORTERINTERFACE_H_
+#define CDS_CPPUNIT_MINIFILEREPORTERINTERFACE_H_
 
 #include <stdio.h>
 
@@ -151,4 +142,4 @@ namespace CppUnitMini {
       FILE* _file;
     };
 }
-#endif /*_CPPUNITMINIFILEREPORTERINTERFACE_H_*/
+#endif // #ifndef CDS_CPPUNIT_MINIFILEREPORTERINTERFACE_H_

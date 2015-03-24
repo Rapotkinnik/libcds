@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDSUNIT_INTRUSIVE_QUEUE_TYPES_H
-#define __CDSUNIT_INTRUSIVE_QUEUE_TYPES_H
+#ifndef CDSUNIT_INTRUSIVE_QUEUE_TYPES_H
+#define CDSUNIT_INTRUSIVE_QUEUE_TYPES_H
 
 #include <cds/intrusive/msqueue.h>
 #include <cds/intrusive/moir_queue.h>
@@ -472,8 +463,8 @@ namespace queue {
         typedef cds::intrusive::SegmentedQueue< cds::gc::DHP, T, traits_SegmentedQueue_mutex_stat >  SegmentedQueue_DHP_mutex_stat;
 
         // Boost SList
-        typedef details::BoostSList< T, std::mutex >    BoostSList_mutex;
-        typedef details::BoostSList< T, cds::lock::Spin >   BoostSList_spin;
+        typedef details::BoostSList< T, std::mutex >      BoostSList_mutex;
+        typedef details::BoostSList< T, cds::sync::spin > BoostSList_spin;
     };
 }
 
@@ -598,4 +589,4 @@ namespace std {
 
 } // namespace std
 
-#endif // #ifndef __CDSUNIT_INTRUSIVE_QUEUE_TYPES_H
+#endif // #ifndef CDSUNIT_INTRUSIVE_QUEUE_TYPES_H

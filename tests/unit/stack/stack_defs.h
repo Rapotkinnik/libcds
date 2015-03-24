@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDSUNIT_STACK_DEFS_H
-#define __CDSUNIT_STACK_DEFS_H
+#ifndef CDSUNIT_STACK_DEFS_H
+#define CDSUNIT_STACK_DEFS_H
 
 #define CDSUNIT_DECLARE_TreiberStack \
     TEST_CASE( Treiber_HP        ) \
@@ -173,4 +164,4 @@
     CPPUNIT_TEST( StdStack_List_Mutex   ) \
     CPPUNIT_TEST( StdStack_List_Spin    )
 
-#endif // #ifndef __CDSUNIT_STACK_DEFS_H
+#endif // #ifndef CDSUNIT_STACK_DEFS_H

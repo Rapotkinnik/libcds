@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "cppunit/thread.h"
 #include <boost/date_time/posix_time/posix_time_types.hpp>
@@ -51,10 +42,8 @@ namespace CppUnitMini {
 
     ThreadPool::~ThreadPool()
     {
-        if ( m_pBarrierStart )
-            delete m_pBarrierStart;
-        if ( m_pBarrierDone )
-            delete m_pBarrierDone;
+        delete m_pBarrierStart;
+        delete m_pBarrierDone;
 
         for ( size_t i = 0; i < m_arrThreads.size(); ++i )
             delete m_arrThreads[i];

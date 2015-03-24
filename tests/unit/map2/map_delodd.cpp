@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "cppunit/thread.h"
 #include "map2/map_types.h"
@@ -135,16 +126,6 @@ namespace boost {
 
 namespace map2 {
 
-    template <typename Map>
-    static inline void check_before_clear( Map& /*s*/ )
-    {}
-
-    template <typename GC, typename Key, typename T, typename Traits>
-    static inline void check_before_clear( cds::container::EllenBinTreeMap<GC, Key, T, Traits>& s )
-    {
-        CPPUNIT_CHECK_CURRENT( s.check_consistency() );
-    }
-
     class Map_DelOdd: public CppUnitMini::TestCase
     {
         std::vector<size_t>     m_arrData;
@@ -171,6 +152,9 @@ namespace map2 {
             {
                 template <typename Q>
                 void operator()( bool /*bNew*/, Q const& )
+                {}
+                template <typename Q, typename V>
+                void operator()( bool /*bNew*/, Q const&, V& )
                 {}
             };
         public:
@@ -634,7 +618,7 @@ namespace map2 {
                 CPPUNIT_CHECK_EX( nErrorCount == 0, "Totals: " << nErrorCount << " keys is not found");
             }
 
-            check_before_clear( testMap );
+            check_before_cleanup( testMap );
 
             CPPUNIT_MSG( "  Clear map (single-threaded)..." );
             timer.reset();
@@ -740,6 +724,7 @@ namespace map2 {
         CDSUNIT_DECLARE_CuckooMap
         CDSUNIT_DECLARE_SkipListMap
         CDSUNIT_DECLARE_EllenBinTreeMap
+        CDSUNIT_DECLARE_BronsonAVLTreeMap
         //CDSUNIT_DECLARE_StdMap
 
         CPPUNIT_TEST_SUITE( Map_DelOdd )
@@ -747,6 +732,7 @@ namespace map2 {
             CDSUNIT_TEST_SplitList
             CDSUNIT_TEST_SkipListMap
             CDSUNIT_TEST_EllenBinTreeMap
+            CDSUNIT_TEST_BronsonAVLTreeMap
             //CDSUNIT_TEST_StripedMap
             //CDSUNIT_TEST_RefinableMap
             CDSUNIT_TEST_CuckooMap

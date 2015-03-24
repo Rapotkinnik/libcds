@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include <functional>
 #include <vector>
@@ -16,7 +7,7 @@
 #include "set2/set_types.h"
 #include "cppunit/thread.h"
 
-#include <cds/lock/spinlock.h>
+#include <cds/sync/spinlock.h>
 
 namespace set2 {
 
@@ -43,7 +34,7 @@ namespace set2 {
             bool volatile   bInitialized;
             cds::OS::ThreadId          threadId     ;   // insert thread id
 
-            typedef cds::lock::Spinlock< cds::backoff::pause >   lock_type;
+            typedef cds::sync::spin_lock< cds::backoff::pause > lock_type;
             mutable lock_type   m_access;
 
             value_type()

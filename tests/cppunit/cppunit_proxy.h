@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 /*
  * Copyright (c) 2003, 2004
@@ -26,8 +17,8 @@
 
 /* $Id$ */
 
-#ifndef _CPPUNITPROXYINTERFACE_H_
-#define _CPPUNITPROXYINTERFACE_H_
+#ifndef CDS_CPPUNIT_PROXYINTERFACE_H_
+#define CDS_CPPUNIT_PROXYINTERFACE_H_
 
 /*
  * STLport specific
@@ -40,4 +31,4 @@
 #include "cppunit/cppunit_mini.h"
 #include <cds/algo/atomic.h>   // for cds::atomicity::empty_item_counter
 
-#endif
+#endif // #ifndef CDS_CPPUNIT_PROXYINTERFACE_H_

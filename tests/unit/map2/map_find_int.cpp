@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 // defines concurrent access to map::nonconcurrent_iterator::Sequence::TValue::nAccess field
 
@@ -201,11 +192,13 @@ namespace map2 {
 
             for ( CppUnitMini::ThreadPool::iterator it = pool.begin(); it != pool.end(); ++it ) {
                 Thread * pThread = static_cast<Thread *>( *it );
-                CPPUNIT_ASSERT( pThread->m_KeyExists.nFailed == 0 );
-                CPPUNIT_ASSERT( pThread->m_KeyExists.nSuccess == m_nRealMapSize * c_nPassCount );
-                CPPUNIT_ASSERT( pThread->m_KeyNotExists.nFailed == 0 );
-                CPPUNIT_ASSERT( pThread->m_KeyNotExists.nSuccess == (m_Arr.size() - m_nRealMapSize) * c_nPassCount );
+                CPPUNIT_CHECK( pThread->m_KeyExists.nFailed == 0 );
+                CPPUNIT_CHECK( pThread->m_KeyExists.nSuccess == m_nRealMapSize * c_nPassCount );
+                CPPUNIT_CHECK( pThread->m_KeyNotExists.nFailed == 0 );
+                CPPUNIT_CHECK( pThread->m_KeyNotExists.nSuccess == (m_Arr.size() - m_nRealMapSize) * c_nPassCount );
             }
+
+            check_before_cleanup( testMap );
 
             testMap.clear();
             additional_check( testMap );
@@ -275,6 +268,7 @@ namespace map2 {
         CDSUNIT_DECLARE_SkipListMap
         CDSUNIT_DECLARE_SkipListMap_nogc
         CDSUNIT_DECLARE_EllenBinTreeMap
+        CDSUNIT_DECLARE_BronsonAVLTreeMap
         CDSUNIT_DECLARE_StripedMap
         CDSUNIT_DECLARE_RefinableMap
         CDSUNIT_DECLARE_CuckooMap
@@ -288,6 +282,7 @@ namespace map2 {
             CDSUNIT_TEST_SkipListMap
             CDSUNIT_TEST_SkipListMap_nogc
             CDSUNIT_TEST_EllenBinTreeMap
+            CDSUNIT_TEST_BronsonAVLTreeMap
             CDSUNIT_TEST_StripedMap
             CDSUNIT_TEST_RefinableMap
             CDSUNIT_TEST_CuckooMap

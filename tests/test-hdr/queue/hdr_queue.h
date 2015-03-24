@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDSUNIT_QUEUE_HDR_H
-#define __CDSUNIT_QUEUE_HDR_H
+#ifndef CDSTEST_HDR_QUEUE_H
+#define CDSTEST_HDR_QUEUE_H
 
 #include "cppunit/cppunit_proxy.h"
 #include <cds/details/defs.h>
@@ -467,4 +458,4 @@ namespace queue {
     };
 } // namespace queue
 
-#endif // #ifndef __CDSUNIT_QUEUE_HDR_H
+#endif // #ifndef CDSTEST_HDR_QUEUE_H

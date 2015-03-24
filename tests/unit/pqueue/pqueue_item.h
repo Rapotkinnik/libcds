@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __CDSUNIT_PQUEUE_ITEM_H
-#define __CDSUNIT_PQUEUE_ITEM_H
+#ifndef CDSUNIT_PQUEUE_ITEM_H
+#define CDSUNIT_PQUEUE_ITEM_H
 
 namespace pqueue {
     struct SimpleValue {
@@ -81,4 +72,4 @@ namespace std {
 
 } // namespace std
 
-#endif // #ifndef __CDSUNIT_PQUEUE_ITEM_H
+#endif // #ifndef CDSUNIT_PQUEUE_ITEM_H

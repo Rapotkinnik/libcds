@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef __UNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H
-#define __UNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H
+#ifndef CDSUNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H
+#define CDSUNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H
 
 #include <cds/details/bounded_array.h>
 #include <cds/atomic.h>
@@ -144,4 +135,4 @@ namespace map { namespace nonconcurrent_iterator {
 
 } } // namespace map::nonconcurrent_iterator
 
-#endif    // #ifndef __UNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H
+#endif    // #ifndef CDSUNIT_NONCONCURRENT_ITERATOR_SEQUENCE_H

@@ -1,13 +1,13 @@
 //$$CDS-header$$
 
-#ifndef __CDS_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H
-#define __CDS_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H
+#ifndef CDSLIB_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H
+#define CDSLIB_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H
 
 #include <cds/intrusive/details/base.h>
 #include <cds/opt/compare.h>
 #include <cds/details/marked_ptr.h>
 #include <cds/details/make_const_type.h>
-#include <cds/lock/spinlock.h>
+#include <cds/sync/spinlock.h>
 #include <cds/urcu/options.h>
 
 namespace cds { namespace intrusive {
@@ -20,12 +20,12 @@ namespace cds { namespace intrusive {
         /**
             Template parameters:
             - GC - garbage collector
-            - Lock - lock type. Default is \p cds::lock::Spin
+            - Lock - lock type. Default is \p cds::sync::spin
             - Tag - a \ref cds_intrusive_hook_tag "tag"
         */
         template <
             class GC
-            ,typename Lock =  cds::lock::Spin
+            ,typename Lock =  cds::sync::spin
             ,typename Tag = opt::none
         >
         struct node
@@ -68,7 +68,7 @@ namespace cds { namespace intrusive {
         struct default_hook {
             typedef undefined_gc    gc;
             typedef opt::none       tag;
-            typedef lock::Spin      lock_type;
+            typedef sync::spin      lock_type;
         };
         //@endcond
 
@@ -89,7 +89,7 @@ namespace cds { namespace intrusive {
         /**
             \p Options are:
             - opt::gc - garbage collector
-            - opt::lock_type - lock type used for node locking. Default is lock::Spin
+            - opt::lock_type - lock type used for node locking. Default is sync::spin
             - opt::tag - a \ref cds_intrusive_hook_tag "tag"
         */
         template < typename... Options >
@@ -103,7 +103,7 @@ namespace cds { namespace intrusive {
 
             \p Options are:
             - opt::gc - garbage collector
-            - opt::lock_type - lock type used for node locking. Default is lock::Spin
+            - opt::lock_type - lock type used for node locking. Default is sync::spin
             - opt::tag - a \ref cds_intrusive_hook_tag "tag"
         */
         template < size_t MemberOffset, typename... Options >
@@ -121,7 +121,7 @@ namespace cds { namespace intrusive {
 
             \p Options are:
             - opt::gc - garbage collector used.
-            - opt::lock_type - lock type used for node locking. Default is lock::Spin
+            - opt::lock_type - lock type used for node locking. Default is sync::spin
             - opt::tag - a \ref cds_intrusive_hook_tag "tag"
         */
         template <typename NodeTraits, typename... Options >
@@ -278,4 +278,4 @@ namespace cds { namespace intrusive {
 
 }}   // namespace cds::intrusive
 
-#endif // #ifndef __CDS_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H
+#endif // #ifndef CDSLIB_INTRUSIVE_DETAILS_LAZY_LIST_BASE_H

@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "set/hdr_striped_set.h"
 
@@ -25,7 +16,7 @@ namespace set {
 
 #include <cds/container/striped_set/boost_set.h>
 #include <cds/container/striped_set.h>
-#include <cds/lock/spinlock.h>
+#include <cds/sync/spinlock.h>
 
 namespace set {
 
@@ -74,7 +65,7 @@ namespace set {
         typedef cc::StripedSet< set_t
             , co::hash< hash_int >
             , co::less< less<item> >
-            ,co::mutex_policy< cc::striped_set::striping< cds::lock::Spin > >
+            , co::mutex_policy< cc::striped_set::striping< cds::sync::spin> >
         >   set_spin;
         test_striped< set_spin >();
 

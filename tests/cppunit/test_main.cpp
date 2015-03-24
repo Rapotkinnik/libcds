@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 /*
  * Copyright (c) 2003, 2004
@@ -125,7 +116,7 @@ namespace CppUnitMini
   }
 
   bool TestCase::shouldRunThis(const char *in_desiredTest, const char *in_className, const char *in_functionName,
-                       bool invert, bool explicit_test, bool &do_progress)
+                       bool invert, bool explicit_test, bool &do_progress) 
   {
       if ((in_desiredTest) && (in_desiredTest[0] != '\0')) {
         do_progress = false;
@@ -464,19 +455,3 @@ int main(int argc, char** argv)
 
   return num_errors;
 }
-
-// See doc/README.intel for explanation about this code
-#if defined (STLPORT) && defined (__ICL) && (__ICL >= 900) && \
-            (_STLP_MSVC_LIB < 1300) && defined (_STLP_USE_DYNAMIC_LIB)
-#  include <exception>
-
-#  undef std
-namespace std
-{
-  void _STLP_CALL unexpected() {
-    unexpected_handler hdl;
-    set_unexpected(hdl = set_unexpected((unexpected_handler)0));
-    hdl();
-  }
-}
-#endif

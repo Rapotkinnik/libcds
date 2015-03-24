@@ -1,13 +1,8 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
+#ifndef CDS_CPPUNIT_TEST_BEANS_H
+#define CDS_CPPUNIT_TEST_BEANS_H
 
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
 
 // Forward declarations
 namespace cds {
@@ -36,3 +31,5 @@ namespace test_beans {
         }
     };
 } // namespace beans
+
+#endif // #ifndef CDS_CPPUNIT_TEST_BEANS_H

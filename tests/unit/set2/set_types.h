@@ -1,16 +1,7 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
+//$$CDS-header$$
 
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
-
-#ifndef _CDSUNIT_SET2_SET_TYPES_H
-#define _CDSUNIT_SET2_SET_TYPES_H
+#ifndef CDSUNIT_SET_TYPES_H
+#define CDSUNIT_SET_TYPES_H
 
 #include <cds/urcu/general_instant.h>
 #include <cds/urcu/general_buffered.h>
@@ -58,7 +49,7 @@
 #endif
 #include <cds/container/striped_set.h>
 
-#include <cds/lock/spinlock.h>
+#include <cds/sync/spinlock.h>
 #include <boost/functional/hash/hash.hpp>
 
 #include "cppunit/cppunit_mini.h"
@@ -1718,11 +1709,11 @@ namespace set2 {
         // ***************************************************************************
         // Standard implementations
 
-        typedef StdSet< key_val, less, cds::SpinLock >                  StdSet_Spin;
-        typedef StdSet< key_val, less, lock::NoLock>                    StdSet_NoLock;
+        typedef StdSet< key_val, less, cds::sync::spin > StdSet_Spin;
+        typedef StdSet< key_val, less, lock::NoLock>     StdSet_NoLock;
 
-        typedef StdHashSet< key_val, hash, less, equal_to, cds::SpinLock >    StdHashSet_Spin;
-        typedef StdHashSet< key_val, hash, less, equal_to, lock::NoLock >     StdHashSet_NoLock;
+        typedef StdHashSet< key_val, hash, less, equal_to, cds::sync::spin > StdHashSet_Spin;
+        typedef StdHashSet< key_val, hash, less, equal_to, lock::NoLock >    StdHashSet_NoLock;
 
     };
 
@@ -1817,4 +1808,4 @@ namespace set2 {
 
 }   // namespace set2
 
-#endif // ifndef _CDSUNIT_SET2_SET_TYPES_H
+#endif // ifndef CDSUNIT_SET_TYPES_H
