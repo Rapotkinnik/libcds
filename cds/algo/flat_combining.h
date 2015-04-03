@@ -10,8 +10,8 @@
 #include <cds/sync/spinlock.h>
 #include <cds/opt/options.h>
 #include <cds/algo/int_algo.h>
+#include <cds/algo/wait_strategy.h>
 #include <boost/thread/tss.hpp>     // thread_specific_ptr
-#include <boost/thread.hpp>
 
 namespace cds { namespace algo {
 
@@ -244,6 +244,7 @@ namespace cds { namespace algo {
         template <
             typename PublicationRecord
             ,typename Traits = traits
+            , typename WaitStrategy = WaitBakkOffStrategy<PublicationRecord>
         >
         class kernel
         {
@@ -256,8 +257,7 @@ namespace cds { namespace algo {
             typedef typename traits::stat      stat;               ///< Internal statistics
             typedef typename traits::memory_model memory_model;    ///< C++ memory model
             //===========================================================================
-            boost::mutex              _globalMutex;
-            boost::condition_variable _globalCondVar;
+            WaitStrategy WS;
             //===========================================================================
         protected:
             //@cond
@@ -415,7 +415,7 @@ namespace cds { namespace algo {
             void operation_done( publication_record& rec )
             {
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
-                _globalCondVar.notify_all();
+                WS.notify(rec);
             }
 
             /// Internal statistics
@@ -726,11 +726,7 @@ namespace cds { namespace algo {
 
                     // The record can be excluded from publication list. Reinsert it
                     republish(pRec);
-
-                    {
-                        boost::unique_lock<boost::mutex> lock(_globalMutex);
-                        _globalCondVar.wait(lock);
-                    }
+                    WS.wait(pRec);
                     //bkoff();
 
                     if ( m_Mutex.try_lock() ) {
