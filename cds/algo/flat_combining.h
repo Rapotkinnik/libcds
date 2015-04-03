@@ -99,6 +99,7 @@ namespace cds { namespace algo {
             unsigned int                        nAge;       ///< Age of the record
             atomics::atomic<publication_record *> pNext; ///< Next record in publication list
             void *                              pOwner;    ///< [internal data] Pointer to \ref kernel object that manages the publication list
+            boost::condition_variable           _condVar;
 
             /// Initializes publication record
             publication_record()
@@ -255,10 +256,9 @@ namespace cds { namespace algo {
             typedef typename traits::allocator allocator;          ///< Allocator type (used for allocating publication_record_type data)
             typedef typename traits::stat      stat;               ///< Internal statistics
             typedef typename traits::memory_model memory_model;    ///< C++ memory model
-            //===========================================================================
+            
             boost::mutex              _globalMutex;
-            boost::condition_variable _globalCondVar;
-            //===========================================================================
+        
         protected:
             //@cond
             typedef cds::details::Allocator< publication_record_type, allocator >   cxx11_allocator; ///< internal helper cds::details::Allocator
@@ -415,7 +415,7 @@ namespace cds { namespace algo {
             void operation_done( publication_record& rec )
             {
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
-                _globalCondVar.notify_all();
+                rec._condVar.notify_one();
             }
 
             /// Internal statistics
@@ -729,7 +729,7 @@ namespace cds { namespace algo {
 
                     {
                         boost::unique_lock<boost::mutex> lock(_globalMutex);
-                        _globalCondVar.wait(lock);
+                        pRec->_condVar.wait(lock);
                     }
                     //bkoff();
 
