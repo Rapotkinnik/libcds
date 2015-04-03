@@ -11,6 +11,7 @@
 #include <cds/opt/options.h>
 #include <cds/algo/int_algo.h>
 #include <boost/thread/tss.hpp>     // thread_specific_ptr
+#include <boost/thread.hpp>
 
 namespace cds { namespace algo {
 
@@ -254,7 +255,10 @@ namespace cds { namespace algo {
             typedef typename traits::allocator allocator;          ///< Allocator type (used for allocating publication_record_type data)
             typedef typename traits::stat      stat;               ///< Internal statistics
             typedef typename traits::memory_model memory_model;    ///< C++ memory model
-
+            //===========================================================================
+            boost::mutex              _globalMutex;
+            boost::condition_variable _globalCondVar;
+            //===========================================================================
         protected:
             //@cond
             typedef cds::details::Allocator< publication_record_type, allocator >   cxx11_allocator; ///< internal helper cds::details::Allocator
@@ -411,6 +415,7 @@ namespace cds { namespace algo {
             void operation_done( publication_record& rec )
             {
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
+                _globalCondVar.notify_all();
             }
 
             /// Internal statistics
@@ -716,13 +721,17 @@ namespace cds { namespace algo {
 
             bool wait_for_combining( publication_record_type * pRec )
             {
-                back_off bkoff;
+                //back_off bkoff;
                 while ( pRec->nRequest.load( memory_model::memory_order_acquire ) != req_Response ) {
 
                     // The record can be excluded from publication list. Reinsert it
-                    republish( pRec );
+                    republish(pRec);
 
-                    bkoff();
+                    {
+                        boost::unique_lock<boost::mutex> lock(_globalMutex);
+                        _globalCondVar.wait(lock);
+                    }
+                    //bkoff();
 
                     if ( m_Mutex.try_lock() ) {
                         if ( pRec->nRequest.load( memory_model::memory_order_acquire ) == req_Response ) {
