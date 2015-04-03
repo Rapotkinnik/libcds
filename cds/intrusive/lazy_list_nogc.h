@@ -1,7 +1,7 @@
 //$$CDS-header$$
 
-#ifndef __CDS_INTRUSIVE_LAZY_LIST_NOGC_H
-#define __CDS_INTRUSIVE_LAZY_LIST_NOGC_H
+#ifndef CDSLIB_INTRUSIVE_LAZY_LIST_NOGC_H
+#define CDSLIB_INTRUSIVE_LAZY_LIST_NOGC_H
 
 #include <mutex>        // unique_lock
 #include <cds/intrusive/details/lazy_list_base.h>
@@ -12,12 +12,12 @@ namespace cds { namespace intrusive {
         /// Lazy list node for \p gc::nogc
         /**
             Template parameters:
-             - Lock - lock type. Default is \p cds::lock::Spin
+             - Lock - lock type. Default is \p cds::sync::spin
              - Tag - a \ref cds_intrusive_hook_tag "tag"
         */
         template <
 #ifdef CDS_DOXYGEN_INVOKED
-            typename Lock = cds::lock::Spin,
+            typename Lock = cds::sync::spin,
             typename Tag = opt::none
 #else
             typename Lock,
@@ -610,11 +610,8 @@ namespace cds { namespace intrusive {
 
             search( pHead, val, pos, cmp );
             if ( pos.pCur != &m_Tail ) {
-                std::unique_lock< typename node_type::lock_type> al( pos.pCur->m_Lock );
                 if ( cmp( *node_traits::to_value_ptr( *pos.pCur ), val ) == 0 )
-                {
                     return iterator( pos.pCur );
-                }
             }
             return end();
         }
@@ -650,4 +647,4 @@ namespace cds { namespace intrusive {
 
 }}  // namespace cds::intrusive
 
-#endif  // #ifndef __CDS_INTRUSIVE_LAZY_LIST_NOGC_H
+#endif  // #ifndef CDSLIB_INTRUSIVE_LAZY_LIST_NOGC_H

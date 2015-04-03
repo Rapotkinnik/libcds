@@ -50,6 +50,13 @@ namespace map2 {
                     if ( bNew )
                         item.second = item.first;
                 }
+
+                // for BronsonAVLTreeMap
+                void operator()( bool bNew, key_type key, value_type& val )
+                {
+                    if ( bNew )
+                        val = key;
+                }
             };
 
         public:
@@ -192,20 +199,20 @@ namespace map2 {
             for ( CppUnitMini::ThreadPool::iterator it = pool.begin(); it != pool.end(); ++it ) {
                 InserterThread * pThread = dynamic_cast<InserterThread *>( *it );
                 if ( pThread ) {
-                    CPPUNIT_ASSERT( pThread->m_nInsertSuccess == c_nAttemptCount );
+                    CPPUNIT_CHECK( pThread->m_nInsertSuccess == c_nAttemptCount );
                     nInsertSuccess += pThread->m_nInsertSuccess;
                     nInsertFailed += pThread->m_nInsertFailed;
                 }
                 else {
                     DeleterThread * p = static_cast<DeleterThread *>( *it );
-                    CPPUNIT_ASSERT( p->m_nDeleteSuccess == c_nAttemptCount );
+                    CPPUNIT_CHECK( p->m_nDeleteSuccess == c_nAttemptCount );
                     nDeleteSuccess += p->m_nDeleteSuccess;
                     nDeleteFailed += p->m_nDeleteFailed;
                 }
             }
-            CPPUNIT_ASSERT( nInsertSuccess == nDeleteSuccess );
+            CPPUNIT_CHECK( nInsertSuccess == nDeleteSuccess );
             size_t nGoalItem = c_nGoalItem;
-            CPPUNIT_ASSERT( testMap.find( nGoalItem ));
+            CPPUNIT_CHECK( testMap.find( nGoalItem ));
 
 
             CPPUNIT_MSG( "    Totals: Ins fail=" << nInsertFailed << " Del fail=" << nDeleteFailed );
@@ -214,9 +221,11 @@ namespace map2 {
             CPPUNIT_MSG( "    Check if the map contains all items" );
             timer.reset();
             for ( size_t i = 0; i < c_nMapSize; ++i ) {
-                CPPUNIT_ASSERT( testMap.find( i ));
+                CPPUNIT_CHECK_EX( testMap.find( i ), "key " << i );
             }
             CPPUNIT_MSG( "    Duration=" << timer.duration() );
+
+            check_before_cleanup( testMap );
 
             testMap.clear();
             additional_check( testMap );
@@ -259,6 +268,7 @@ namespace map2 {
         CDSUNIT_DECLARE_SplitList
         CDSUNIT_DECLARE_SkipListMap
         CDSUNIT_DECLARE_EllenBinTreeMap
+        CDSUNIT_DECLARE_BronsonAVLTreeMap
         CDSUNIT_DECLARE_StripedMap
         CDSUNIT_DECLARE_RefinableMap
         CDSUNIT_DECLARE_CuckooMap
@@ -269,6 +279,7 @@ namespace map2 {
             CDSUNIT_TEST_SplitList
             CDSUNIT_TEST_SkipListMap
             CDSUNIT_TEST_EllenBinTreeMap
+            CDSUNIT_TEST_BronsonAVLTreeMap
             CDSUNIT_TEST_StripedMap
             CDSUNIT_TEST_RefinableMap
             CDSUNIT_TEST_CuckooMap
