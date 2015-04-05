@@ -5,6 +5,7 @@ project(cds)
 
 set(PROJECT_VERSION 2.1.0)
 
+find_package(Threads REQUIRED)
 find_package(Boost COMPONENTS system thread REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 

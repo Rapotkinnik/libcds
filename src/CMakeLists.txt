@@ -10,6 +10,6 @@ set(SOURCES hp_gc.cpp
             dllmain.cpp)
 
 add_library(${CDS_SHARED_LIBRARY} SHARED ${SOURCES})
-target_link_libraries(${CDS_SHARED_LIBRARY} PRIVATE ${Boost_LIBRARIES})
+target_link_libraries(${CDS_SHARED_LIBRARY} PRIVATE ${Boost_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS ${CDS_SHARED_LIBRARY} DESTINATION lib)
