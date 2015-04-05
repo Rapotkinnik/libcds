@@ -8,5 +8,5 @@ set(CDSUNIT_QUEUE_SOURCES
     intrusive_queue_reader_writer.cpp)
 
 add_executable(${PACKAGE_NAME} ${CDSUNIT_QUEUE_SOURCES} $<TARGET_OBJECTS:${TEST_COMMON}>)
-target_link_libraries(${PACKAGE_NAME} ${CDS_SHARED_LIBRARY} ${Boost_THREAD_LIBRARY})
+target_link_libraries(${PACKAGE_NAME} ${CDS_SHARED_LIBRARY} ${Boost_THREAD_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${CMAKE_THREAD_LIBS_INIT})
 add_test(NAME ${PACKAGE_NAME} COMMAND ${PACKAGE_NAME})
