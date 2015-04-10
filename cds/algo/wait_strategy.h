@@ -39,7 +39,7 @@ namespace cds {  namespace algo {  namespace flat_combining {
         }
     };
 //====================================================================
-    template<typename PublicationRecord>
+/*    template<typename PublicationRecord>
     class WaitMultMutexMultCondVarStrategy{
         typedef PublicationRecord   publication_record_type;   ///< publication record type
     public:
@@ -52,4 +52,5 @@ namespace cds {  namespace algo {  namespace flat_combining {
             rec._condVar.notify_one();
         }
     };
+*/
 }}}//end namespace cds::algo::flat_combining
