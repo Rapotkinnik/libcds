@@ -244,7 +244,7 @@ namespace cds { namespace algo {
         template <
             typename PublicationRecord
             ,typename Traits = traits
-            , typename WaitStrategy = WaitBakkOffStrategy<PublicationRecord>
+            , typename WaitStrategy = WaitOneMutexOneCondVarStrategy<PublicationRecord>
         >
         class kernel
         {
@@ -664,8 +664,9 @@ namespace cds { namespace algo {
                         break;
 
                 m_Stat.onCombining();
-                if ( (nCurAge & m_nCompactFactor) == 0 )
-                    compact_list( nCurAge );
+//                TODO::compact_list deleted sleep puclicaton record
+//                if ( (nCurAge & m_nCompactFactor) == 0 )
+//                    compact_list( nCurAge );
             }
 
             template <class Container>

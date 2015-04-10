@@ -11,7 +11,7 @@ namespace cds {  namespace algo {  namespace flat_combining {
         void wait(publication_record_type * pRec){}
         void notify(publication_record& rec){}
     };
-
+//====================================================================
     template<typename PublicationRecord>
     class WaitBakkOffStrategy{
         typedef PublicationRecord   publication_record_type;   ///< publication record type
@@ -22,7 +22,7 @@ namespace cds {  namespace algo {  namespace flat_combining {
         }
         void notify(publication_record& rec){}
     };
-
+//====================================================================
     template<typename PublicationRecord>
     class WaitOneMutexOneCondVarStrategy{
         typedef PublicationRecord   publication_record_type;   ///< publication record type
@@ -38,7 +38,7 @@ namespace cds {  namespace algo {  namespace flat_combining {
             _globalCondVar.notify_all();
         }
     };
-
+//====================================================================
     template<typename PublicationRecord>
     class WaitMultMutexMultCondVarStrategy{
         typedef PublicationRecord   publication_record_type;   ///< publication record type
@@ -52,4 +52,4 @@ namespace cds {  namespace algo {  namespace flat_combining {
             rec._condVar.notify_one();
         }
     };
-}}}
+}}}//end namespace cds::algo::flat_combining
