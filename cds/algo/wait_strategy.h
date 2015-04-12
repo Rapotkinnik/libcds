@@ -31,7 +31,7 @@ namespace cds {  namespace algo {  namespace flat_combining {
     public:
         void wait(publication_record_type * pRec){
             boost::unique_lock<boost::mutex> lock(_globalMutex);
-            _globalCondVar.wait(lock);
+            _globalCondVar.timed_wait(lock, static_cast<boost::posix_time::seconds>(5));
         }
 
         void notify(publication_record& rec){
