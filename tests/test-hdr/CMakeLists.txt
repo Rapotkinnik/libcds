@@ -63,7 +63,7 @@ set(CDS_TESTHDR_DEQUE
     deque/hdr_fcdeque.cpp)
 
 set(CDS_TESTHDR_ORDLIST
-    ordered_list/hdr_lazy_dhp.cpp
+#    ordered_list/hdr_lazy_dhp.cpp
     ordered_list/hdr_lazy_hp.cpp
     ordered_list/hdr_lazy_nogc.cpp
     ordered_list/hdr_lazy_rcu_gpi.cpp
