@@ -103,11 +103,14 @@ namespace cds { namespace algo {
             Each data structure based on flat combining contains a class derived from \p %publication_record
         */
         struct publication_record {
-            atomics::atomic<unsigned int>         nRequest;   ///< Request field (depends on data structure) операция которую хотим выполнить
-            atomics::atomic<unsigned int>         nState;     ///< Record state: inactive, active, removed управление временем жизни
-            unsigned int                          nAge;       ///< Age of the record сколько неактивная запись может быть в списке
-            atomics::atomic<publication_record *> pNext;      ///< Next record in publication list
-            void *                                pOwner;     ///< [internal data] Pointer to \ref kernel object that manages the publication list
+            atomics::atomic<unsigned int>    nRequest;   ///< Request field (depends on data structure)
+            atomics::atomic<unsigned int>    nState;     ///< Record state: inactive, active, removed
+            unsigned int                        nAge;       ///< Age of the record
+            atomics::atomic<publication_record *> pNext; ///< Next record in publication list
+            void *                              pOwner;    ///< [internal data] Pointer to \ref kernel object that manages the publication list
+            boost::condition_variable           _condVar;
+            boost::mutex                        _mutex;
+            bool                                _isSleep;
 
             /// Initializes publication record
             publication_record()
@@ -116,6 +119,7 @@ namespace cds { namespace algo {
                 , nAge(0)
                 , pNext( nullptr )
                 , pOwner( nullptr )
+                , _isSleep(false)
             {}
 
             /// Returns the value of \p nRequest field
@@ -417,6 +421,7 @@ namespace cds { namespace algo {
             */
             void operation_done( publication_record& rec )
             {
+                boost::unique_lock<boost::mutex> lock(rec._mutex);
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
             }
 
@@ -722,14 +727,20 @@ namespace cds { namespace algo {
 
             bool wait_for_combining( publication_record_type * pRec )
             {
-                back_off bkoff;
-
                 while ( pRec->nRequest.load( memory_model::memory_order_acquire ) != req_Response ) {
 
                     // The record can be excluded from publication list. Reinsert it
-                    republish( pRec );
-                    
-                    bkoff();
+
+                    republish(pRec);
+
+                    boost::unique_lock<boost::mutex> lock(pRec->_mutex);
+                    if (pRec->nRequest.load(memory_model::memory_order_acquire) > req_Operation)
+                    {
+                        pRec->_isSleep = true;
+                        assert(pRec->nRequest.load(memory_model::memory_order_acquire) > req_Operation);
+                        pRec->_condVar.timed_wait(lock, boost::posix_time::seconds(1));
+                        pRec->_isSleep = false;
+                    }
 
                     if ( m_Mutex.try_lock() ) {
                         if ( pRec->nRequest.load( memory_model::memory_order_acquire ) == req_Response ) {
@@ -750,6 +761,7 @@ namespace cds { namespace algo {
                 for ( publication_record * p = m_pHead; p; ) {
                     if ( p->nState.load( memory_model::memory_order_acquire ) == active && p->nAge + m_nCompactFactor < nCurAge ) {
                         if ( pPrev ) {
+                            assert(!pPrev->_isSleep);
                             publication_record * pNext = p->pNext.load( memory_model::memory_order_acquire );
                             if ( pPrev->pNext.compare_exchange_strong( p, pNext,
                                 memory_model::memory_order_release, atomics::memory_order_relaxed ))
