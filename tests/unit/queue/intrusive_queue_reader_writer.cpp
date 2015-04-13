@@ -1,13 +1,4 @@
-/*
-    This file is a part of libcds - Concurrent Data Structures library
-    Version: 2.0.0
-
-    (C) Copyright Maxim Khizhinsky (libcds.dev@gmail.com) 2006-2014
-    Distributed under the BSD license (see accompanying file license.txt)
-
-    Source code repo: http://github.com/khizmax/libcds/
-    Download: http://sourceforge.net/projects/libcds/files/
-*/
+//$$CDS-header$$
 
 #include "cppunit/thread.h"
 #include "queue/intrusive_queue_type.h"
@@ -454,6 +445,7 @@ namespace queue {
 
 
         CPPUNIT_TEST_SUITE(IntrusiveQueue_ReaderWriter)
+<<<<<<< HEAD
             CDSUNIT_TEST_MSQueue
             CDSUNIT_TEST_MoirQueue
             CDSUNIT_TEST_OptimisticQueue
@@ -463,6 +455,17 @@ namespace queue {
             CDSUNIT_TEST_TsigasCycleQueue
             CDSUNIT_TEST_VyukovMPMCCycleQueue
             CDSUNIT_TEST_BoostSList
+=======
+        //CDSUNIT_TEST_MSQueue
+        //CDSUNIT_TEST_MoirQueue
+        //CDSUNIT_TEST_OptimisticQueue
+        //CDSUNIT_TEST_BasketQueue
+            CDSUNIT_TEST_FCQueue
+        //CDSUNIT_TEST_SegmentedQueue
+        //CDSUNIT_TEST_TsigasCycleQueue
+        //CDSUNIT_TEST_VyukovMPMCCycleQueue
+        //CDSUNIT_TEST_BoostSList
+>>>>>>> 4bbc54b780204a0ef5627bd8e5935e513ba02e1f
         CPPUNIT_TEST_SUITE_END();
     };
 
