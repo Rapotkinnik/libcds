@@ -757,7 +757,7 @@ namespace cds { namespace algo {
                 for ( publication_record * p = m_pHead; p; ) {
                     if ( p->nState.load( memory_model::memory_order_acquire ) == active && p->nAge + m_nCompactFactor < nCurAge ) {
                         if ( pPrev ) {
-                            assert(!pPrev->_isSleep);
+                            //assert(!pPrev->_isSleep);
                             publication_record * pNext = p->pNext.load( memory_model::memory_order_acquire );
                             if ( pPrev->pNext.compare_exchange_strong( p, pNext,
                                 memory_model::memory_order_release, atomics::memory_order_relaxed ))

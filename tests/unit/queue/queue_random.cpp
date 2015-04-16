@@ -280,19 +280,7 @@ namespace queue {
         CDSUNIT_DECLARE_StdQueue( SimpleValue )
 
         CPPUNIT_TEST_SUITE(Queue_Random)
-<<<<<<< HEAD
-            CDSUNIT_TEST_MoirQueue
-            CDSUNIT_TEST_MSQueue
-            CDSUNIT_TEST_OptimisticQueue
-            CDSUNIT_TEST_BasketQueue
-            CDSUNIT_TEST_FCQueue
-            CDSUNIT_TEST_FCDeque
-            CDSUNIT_TEST_SegmentedQueue
-            CDSUNIT_TEST_RWQueue
-            CDSUNIT_TEST_TsigasCysleQueue
-            CDSUNIT_TEST_VyukovMPMCCycleQueue
-            CDSUNIT_TEST_StdQueue
-=======
+
         //CDSUNIT_TEST_MoirQueue
         //CDSUNIT_TEST_MSQueue
         //CDSUNIT_TEST_OptimisticQueue
@@ -304,7 +292,7 @@ namespace queue {
         //CDSUNIT_TEST_TsigasCysleQueue
         //CDSUNIT_TEST_VyukovMPMCCycleQueue
         //CDSUNIT_TEST_StdQueue
->>>>>>> 4bbc54b780204a0ef5627bd8e5935e513ba02e1f
+
         CPPUNIT_TEST_SUITE_END();
     };
 
