@@ -267,17 +267,17 @@ namespace queue {
         }
 
     protected:
-        CDSUNIT_DECLARE_MoirQueue( SimpleValue )
-        CDSUNIT_DECLARE_MSQueue( SimpleValue )
-        CDSUNIT_DECLARE_OptimisticQueue( SimpleValue )
-        CDSUNIT_DECLARE_BasketQueue( SimpleValue )
+        //CDSUNIT_DECLARE_MoirQueue( SimpleValue )
+        //CDSUNIT_DECLARE_MSQueue( SimpleValue )
+        //CDSUNIT_DECLARE_OptimisticQueue( SimpleValue )
+        //CDSUNIT_DECLARE_BasketQueue( SimpleValue )
         CDSUNIT_DECLARE_FCQueue( SimpleValue )
         CDSUNIT_DECLARE_FCDeque( SimpleValue )
-        CDSUNIT_DECLARE_SegmentedQueue( SimpleValue )
-        CDSUNIT_DECLARE_RWQueue( SimpleValue )
-        CDSUNIT_DECLARE_TsigasCysleQueue( SimpleValue )
-        CDSUNIT_DECLARE_VyukovMPMCCycleQueue( SimpleValue )
-        CDSUNIT_DECLARE_StdQueue( SimpleValue )
+        //CDSUNIT_DECLARE_SegmentedQueue( SimpleValue )
+        //CDSUNIT_DECLARE_RWQueue( SimpleValue )
+        //CDSUNIT_DECLARE_TsigasCysleQueue( SimpleValue )
+        //CDSUNIT_DECLARE_VyukovMPMCCycleQueue( SimpleValue )
+        //CDSUNIT_DECLARE_StdQueue( SimpleValue )
 
         CPPUNIT_TEST_SUITE(Queue_Random)
 

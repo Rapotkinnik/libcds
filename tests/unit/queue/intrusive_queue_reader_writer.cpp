@@ -433,15 +433,15 @@ namespace queue {
         }
 
     protected:
-        CDSUNIT_DECLARE_MSQueue
-        CDSUNIT_DECLARE_MoirQueue
-        CDSUNIT_DECLARE_OptimisticQueue
-        CDSUNIT_DECLARE_BasketQueue
+        //CDSUNIT_DECLARE_MSQueue
+        //CDSUNIT_DECLARE_MoirQueue
+        //CDSUNIT_DECLARE_OptimisticQueue
+        //CDSUNIT_DECLARE_BasketQueue
         CDSUNIT_DECLARE_FCQueue
-        CDSUNIT_DECLARE_SegmentedQueue
-        CDSUNIT_DECLARE_TsigasCycleQueue
-        CDSUNIT_DECLARE_VyukovMPMCCycleQueue
-        CDSUNIT_DECLARE_BoostSList
+        //CDSUNIT_DECLARE_SegmentedQueue
+        //CDSUNIT_DECLARE_TsigasCycleQueue
+        //CDSUNIT_DECLARE_VyukovMPMCCycleQueue
+        //CDSUNIT_DECLARE_BoostSList
 
 
         CPPUNIT_TEST_SUITE(IntrusiveQueue_ReaderWriter)

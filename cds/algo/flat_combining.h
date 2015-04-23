@@ -730,11 +730,11 @@ namespace cds { namespace algo {
                     republish(pRec);
 
                     boost::unique_lock<boost::mutex> lock(pRec->_mutex);
-                    if (pRec->nRequest.load(memory_model::memory_order_acquire) > req_Operation)
+                    if (pRec->nRequest.load(memory_model::memory_order_acquire) >= req_Operation)
                     {
                         pRec->_isSleep = true;
-                        assert(pRec->nRequest.load(memory_model::memory_order_acquire) > req_Operation);
-                        pRec->_condVar.timed_wait(lock, boost::posix_time::seconds(1));
+                        assert(pRec->nRequest.load(memory_model::memory_order_acquire) >= req_Operation);
+                        pRec->_condVar.timed_wait(lock, boost::posix_time::seconds(5));
                         pRec->_isSleep = false;
                     }
 
@@ -757,7 +757,7 @@ namespace cds { namespace algo {
                 for ( publication_record * p = m_pHead; p; ) {
                     if ( p->nState.load( memory_model::memory_order_acquire ) == active && p->nAge + m_nCompactFactor < nCurAge ) {
                         if ( pPrev ) {
-                            //assert(!pPrev->_isSleep);
+                            assert(!pPrev->_isSleep);
                             publication_record * pNext = p->pNext.load( memory_model::memory_order_acquire );
                             if ( pPrev->pNext.compare_exchange_strong( p, pNext,
                                 memory_model::memory_order_release, atomics::memory_order_relaxed ))
