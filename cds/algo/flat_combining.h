@@ -666,8 +666,8 @@ namespace cds { namespace algo {
                         break;
 
                 m_Stat.onCombining();
-                if ( (nCurAge & m_nCompactFactor) == 0 )
-                    compact_list( nCurAge );
+//                if ( (nCurAge & m_nCompactFactor) == 0 )
+//                    compact_list( nCurAge );
             }
 
             template <class Container>
