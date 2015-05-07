@@ -244,12 +244,15 @@ namespace cds { namespace algo {
         template <
             typename PublicationRecord
             ,typename Traits = traits
-            , typename WaitStrategy = WaitOneMutexOneCondVarStrategy<PublicationRecord>
+            , typename WaitStrategy = LocalMutexLocalCondVarStartegy
         >
         class kernel
         {
+        	struct ExtendedPublicationRecord: public PublicationRecord, public WaitStrategy::ExtensionForSrategy
+			{};
+
         public:
-            typedef PublicationRecord   publication_record_type;   ///< publication record type
+            typedef ExtendedPublicationRecord   publication_record_type;   ///< publication record type
             typedef Traits   traits;                               ///< Type traits
             typedef typename traits::lock_type global_lock_type;   ///< Global lock type
             typedef typename traits::back_off  back_off;           ///< back-off strategy type
@@ -318,7 +321,7 @@ namespace cds { namespace algo {
                 If there is no publication record for the current thread
                 the function allocates it.
             */
-            publication_record_type * acquire_record()
+            PublicationRecord * acquire_record()
             {
                 publication_record_type * pRec = m_pThreadRec.get();
                 if ( !pRec ) {
@@ -335,11 +338,11 @@ namespace cds { namespace algo {
                 assert( pRec->nRequest.load( memory_model::memory_order_relaxed ) == req_EmptyRecord );
 
                 m_Stat.onAcquirePubRecord();
-                return pRec;
+                return static_cast<PublicationRecord *>(pRec);
             }
 
             /// Marks publication record for the current thread as empty
-            void release_record( publication_record_type * pRec )
+            void release_record( PublicationRecord * pRec )
             {
                 assert( pRec->is_done() );
                 pRec->nRequest.store( req_EmptyRecord, memory_model::memory_order_relaxed );
@@ -357,7 +360,7 @@ namespace cds { namespace algo {
                 for each active non-empty publication record.
             */
             template <class Container>
-            void combine( unsigned int nOpId, publication_record_type * pRec, Container& owner )
+            void combine( unsigned int nOpId, PublicationRecord * pRec, Container& owner )
             {
                 assert( nOpId >= req_Operation );
                 assert( pRec );
@@ -366,7 +369,7 @@ namespace cds { namespace algo {
 
                 m_Stat.onOperation();
 
-                try_combining( owner, pRec );
+                try_combining( owner, static_cast<publication_record_type *>(pRec) );
             }
 
             /// Trying to execute operation \p nOpId in batch-combine mode
@@ -389,7 +392,7 @@ namespace cds { namespace algo {
                 to process rest of publication records.
             */
             template <class Container>
-            void batch_combine( unsigned int nOpId, publication_record_type * pRec, Container& owner )
+            void batch_combine( unsigned int nOpId, PublicationRecord * pRec, Container& owner )
             {
                 assert( nOpId >= req_Operation );
                 assert( pRec );
@@ -398,7 +401,7 @@ namespace cds { namespace algo {
 
                 m_Stat.onOperation();
 
-                try_batch_combining( owner, pRec );
+                try_batch_combining( owner, static_cast<publication_record_type *>(pRec) );
             }
 
             /// Waits for end of combining
@@ -415,7 +418,7 @@ namespace cds { namespace algo {
             void operation_done( publication_record& rec )
             {
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
-                WS.notify(rec);
+                WS.notify(static_cast<ExtendedPublicationRecord *>(&rec));
             }
 
             /// Internal statistics
@@ -665,8 +668,8 @@ namespace cds { namespace algo {
 
                 m_Stat.onCombining();
 //                TODO::compact_list deleted sleep puclicaton record
-//                if ( (nCurAge & m_nCompactFactor) == 0 )
-//                    compact_list( nCurAge );
+                if ( (nCurAge & m_nCompactFactor) == 0 )
+                    compact_list( nCurAge );
             }
 
             template <class Container>
