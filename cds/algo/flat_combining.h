@@ -185,11 +185,11 @@ namespace cds { namespace algo {
         */
         struct traits
         {
-            typedef cds::sync::spin             lock_type;  ///< Lock type
-            typedef cds::backoff::delay_of<2>   back_off;   ///< Back-off strategy
-            typedef CDS_DEFAULT_ALLOCATOR       allocator;  ///< Allocator used for TLS data (allocating publication_record derivatives)
-            typedef empty_stat                  stat;       ///< Internal statistics
-            typedef opt::v::relaxed_ordering  memory_model; ///< /// C++ memory ordering model
+            typedef cds::sync::spin             lock_type;     ///< Lock type
+			typedef DefautlStartegy             wait_strategy; ///< wait strategy
+            typedef CDS_DEFAULT_ALLOCATOR       allocator;     ///< Allocator used for TLS data (allocating publication_record derivatives)
+            typedef empty_stat                  stat;          ///< Internal statistics
+            typedef opt::v::relaxed_ordering    memory_model;  ///< C++ memory ordering model
         };
 
         /// Metafunction converting option list to traits
@@ -244,24 +244,21 @@ namespace cds { namespace algo {
         template <
             typename PublicationRecord
             ,typename Traits = traits
-            , typename WaitStrategy = LocalMutexLocalCondVarStartegy
         >
         class kernel
         {
-        	struct ExtendedPublicationRecord: public PublicationRecord, public WaitStrategy::ExtensionForSrategy
+        	struct ExtendedPublicationRecord: public PublicationRecord, public Traits::wait_strategy::ExtensionForSrategy
 			{};
 
         public:
             typedef ExtendedPublicationRecord   publication_record_type;   ///< publication record type
             typedef Traits   traits;                               ///< Type traits
             typedef typename traits::lock_type global_lock_type;   ///< Global lock type
-            typedef typename traits::back_off  back_off;           ///< back-off strategy type
             typedef typename traits::allocator allocator;          ///< Allocator type (used for allocating publication_record_type data)
             typedef typename traits::stat      stat;               ///< Internal statistics
             typedef typename traits::memory_model memory_model;    ///< C++ memory model
-            //===========================================================================
-            WaitStrategy WS;
-            //===========================================================================
+			typedef typename traits::wait_strategy wait_strategy;  ///< Wait Startegy
+
         protected:
             //@cond
             typedef cds::details::Allocator< publication_record_type, allocator >   cxx11_allocator; ///< internal helper cds::details::Allocator
@@ -276,6 +273,7 @@ namespace cds { namespace algo {
             mutable stat                m_Stat;     ///< Internal statistics
             unsigned int const          m_nCompactFactor; ///< Publication list compacting factor (the list will be compacted through \p %m_nCompactFactor combining passes)
             unsigned int const          m_nCombinePassCount; ///< Number of combining passes
+			wait_strategy               m_Wait_strategy; ///< Wait Startegy
 
         public:
             /// Initializes the object
@@ -418,7 +416,7 @@ namespace cds { namespace algo {
             void operation_done( publication_record& rec )
             {
                 rec.nRequest.store( req_Response, memory_model::memory_order_release );
-                WS.notify(static_cast<ExtendedPublicationRecord *>(&rec));
+				m_Wait_strategy.notify(static_cast<ExtendedPublicationRecord *>(&rec));
             }
 
             /// Internal statistics
@@ -730,7 +728,7 @@ namespace cds { namespace algo {
 
                     // The record can be excluded from publication list. Reinsert it
                     republish(pRec);
-                    WS.wait(pRec);
+					m_Wait_strategy.wait(pRec);
                     //bkoff();
 
                     if ( m_Mutex.try_lock() ) {
